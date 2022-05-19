@@ -16,6 +16,7 @@ namespace AddressBook
         public int zip;
         public int phoneNo;
         public string email;
+        public static List<Contacts> listContacts = new List<Contacts>();
         public Contacts()
         {
         }
@@ -45,12 +46,12 @@ namespace AddressBook
             Console.WriteLine("Enter Zip");
             int personZip = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter Phone Number");
-            int phoneNumber = Convert.ToInt32(Console.ReadLine());
+            int phoneNumber = (int)Convert.ToInt64(Console.ReadLine());
             Console.WriteLine("Enter Email Id");
             string personEmail = Console.ReadLine();
             string name = fName;
-            Contacts objCon = new Contacts(fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
-            AddressBookMain.listCon.Add(objCon);
+            Contacts objContacts = new Contacts(fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
+            listContacts.Add(objContacts);
             Console.WriteLine("Contact has been Added");
         }
         public static void EditContact()
@@ -60,7 +61,7 @@ namespace AddressBook
             Console.WriteLine("Enter Second Name");
             string sName = Console.ReadLine();
             bool personFound = false;
-            foreach (Contacts item in AddressBookMain.listCon)
+            foreach (Contacts item in listContacts)
             {
                 if (((item.firstName).ToLower() == fName.ToLower()) && ((item.secondName).ToLower() == sName.ToLower()))
                 {
@@ -73,7 +74,7 @@ namespace AddressBook
                     Console.WriteLine("Enter new Address");
                     item.zip = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("Enter new Phone Number");
-                    item.phoneNo = Convert.ToInt32(Console.ReadLine());
+                    item.phoneNo = (int)Convert.ToInt64(Console.ReadLine());
                     Console.WriteLine("Enter new Email");
                     item.email = Console.ReadLine();
                     personFound = true;
@@ -93,7 +94,7 @@ namespace AddressBook
             string sName = Console.ReadLine();
             bool personFound = false;
             Contacts personToDelete = new Contacts();
-            foreach (Contacts item in AddressBookMain.listCon)
+            foreach (Contacts item in listContacts)
             {
                 if (((item.firstName).ToLower() == fName.ToLower()) && ((item.secondName).ToLower() == sName.ToLower()))
                 {
@@ -102,7 +103,7 @@ namespace AddressBook
                     Console.WriteLine("Person has been Removed from Contacts");
                 }
             }
-            AddressBookMain.listCon.Remove(personToDelete);
+            listContacts.Remove(personToDelete);
             if (personFound == false)
             {
                 Console.WriteLine("Person not found");
