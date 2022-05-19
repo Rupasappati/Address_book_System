@@ -14,9 +14,12 @@ namespace AddressBook
         public string city;
         public string state;
         public int zip;
-        public long phoneNo;
+        public int phoneNo;
         public string email;
-        public Contacts(string firstName, string secondName, string address, string city, string state, int zip, long phoneNo, string email)
+        public Contacts()
+        {
+        }
+        public Contacts(string firstName, string secondName, string address, string city, string state, int zip, int phoneNo, string email)
         {
             this.firstName = firstName;
             this.secondName = secondName;
@@ -45,9 +48,10 @@ namespace AddressBook
             int phoneNumber = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter Email Id");
             string personEmail = Console.ReadLine();
-            Contacts conObj = new Contacts(fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
+            string name = fName;
+            Contacts objCon = new Contacts(fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
+            AddressBookMain.listCon.Add(objCon);
             Console.WriteLine("Contact has been Added");
-            Console.ReadLine();
         }
         public static void EditContact()
         {
@@ -81,5 +85,29 @@ namespace AddressBook
                 Console.WriteLine("Person not found");
             }
         }
+        public static void DeleteContact()
+        {
+            Console.WriteLine("Enter First Name");
+            string fName = Console.ReadLine();
+            Console.WriteLine("Enter Second Name");
+            string sName = Console.ReadLine();
+            bool personFound = false;
+            Contacts personToDelete = new Contacts();
+            foreach (Contacts item in AddressBookMain.listCon)
+            {
+                if (((item.firstName).ToLower() == fName.ToLower()) && ((item.secondName).ToLower() == sName.ToLower()))
+                {
+                    personToDelete = item;
+                    personFound = true;
+                    Console.WriteLine("Person has been Removed from Contacts");
+                }
+            }
+            AddressBookMain.listCon.Remove(personToDelete);
+            if (personFound == false)
+            {
+                Console.WriteLine("Person not found");
+            }
+        }
+
     }
 }
