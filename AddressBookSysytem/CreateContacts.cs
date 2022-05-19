@@ -27,6 +27,8 @@ namespace AddressBook
             this.phoneNo = phoneNo;
             this.email = email;
         }
+
+        //add new contacts
         public static void AddContacts()
         {
             Console.WriteLine("Enter First Name");
