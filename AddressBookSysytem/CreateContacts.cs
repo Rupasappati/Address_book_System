@@ -27,8 +27,6 @@ namespace AddressBook
             this.phoneNo = phoneNo;
             this.email = email;
         }
-
-        //add new contacts
         public static void AddContacts()
         {
             Console.WriteLine("Enter First Name");
@@ -49,7 +47,39 @@ namespace AddressBook
             string personEmail = Console.ReadLine();
             Contacts conObj = new Contacts(fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
             Console.WriteLine("Contact has been Added");
-            
+            Console.ReadLine();
+        }
+        public static void EditContact()
+        {
+            Console.WriteLine("Enter First Name");
+            string fName = Console.ReadLine();
+            Console.WriteLine("Enter Second Name");
+            string sName = Console.ReadLine();
+            bool personFound = false;
+            foreach (Contacts item in AddressBookMain.listCon)
+            {
+                if (((item.firstName).ToLower() == fName.ToLower()) && ((item.secondName).ToLower() == sName.ToLower()))
+                {
+                    Console.WriteLine("Enter new Address");
+                    item.address = Console.ReadLine();
+                    Console.WriteLine("Enter new City");
+                    item.city = Console.ReadLine();
+                    Console.WriteLine("Enter new State");
+                    item.state = Console.ReadLine();
+                    Console.WriteLine("Enter new Address");
+                    item.zip = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Enter new Phone Number");
+                    item.phoneNo = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Enter new Email");
+                    item.email = Console.ReadLine();
+                    personFound = true;
+                    Console.WriteLine("Details have been updated");
+                }
+            }
+            if (personFound == false)
+            {
+                Console.WriteLine("Person not found");
+            }
         }
     }
 }
