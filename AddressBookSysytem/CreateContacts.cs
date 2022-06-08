@@ -8,20 +8,22 @@ namespace AddressBook
 {
     class Contacts
     {
-        public string firstName;
-        public string secondName;
-        public string address;
-        public string city;
-        public string state;
-        public int zip;
-        public int phoneNo;
-        public string email;
-        public static List<Contacts> listContacts = new List<Contacts>();
-        public Contacts()
+        internal string addressBookName;
+        internal string firstName;
+        internal string secondName;
+        internal string address;
+        internal string city;
+        internal string state;
+        internal int zip;
+        internal int phoneNo;
+        internal string email;
+        internal static List<Contacts> listContacts = new List<Contacts>();
+        internal Contacts()
         {
         }
-        public Contacts(string firstName, string secondName, string address, string city, string state, int zip, int phoneNo, string email)
+        internal Contacts(string addressBookName, string firstName, string secondName, string address, string city, string state, int zip, int phoneNo, string email)
         {
+            this.addressBookName = addressBookName;
             this.firstName = firstName;
             this.secondName = secondName;
             this.address = address;
@@ -31,7 +33,7 @@ namespace AddressBook
             this.phoneNo = phoneNo;
             this.email = email;
         }
-        public static void AddContacts()
+        internal void AddContacts(string addressBookName)
         {
             Console.WriteLine("Enter First Name");
             string fName = Console.ReadLine();
@@ -49,12 +51,11 @@ namespace AddressBook
             int phoneNumber = (int)Convert.ToInt64(Console.ReadLine());
             Console.WriteLine("Enter Email Id");
             string personEmail = Console.ReadLine();
-            string name = fName;
-            Contacts objContacts = new Contacts(fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
+            Contacts objContacts = new Contacts(addressBookName, fName, sName, personAddress, personCity, personState, personZip, phoneNumber, personEmail);
             listContacts.Add(objContacts);
-            Console.WriteLine("Contact has been Added");
+            Console.WriteLine("Contact has been Added to " + addressBookName);
         }
-        public static void EditContact()
+        internal void EditContact(string addressBookName)
         {
             Console.WriteLine("Enter First Name");
             string fName = Console.ReadLine();
@@ -63,7 +64,7 @@ namespace AddressBook
             bool personFound = false;
             foreach (Contacts item in listContacts)
             {
-                if (((item.firstName).ToLower() == fName.ToLower()) && ((item.secondName).ToLower() == sName.ToLower()))
+                if ((((item.firstName).ToLower() == fName.ToLower()) && ((item.secondName).ToLower() == sName.ToLower())) && item.addressBookName == addressBookName)
                 {
                     Console.WriteLine("Enter new Address");
                     item.address = Console.ReadLine();
@@ -78,7 +79,7 @@ namespace AddressBook
                     Console.WriteLine("Enter new Email");
                     item.email = Console.ReadLine();
                     personFound = true;
-                    Console.WriteLine("Details have been updated");
+                    Console.WriteLine("Details have been updated in " + addressBookName);
                 }
             }
             if (personFound == false)
@@ -86,27 +87,38 @@ namespace AddressBook
                 Console.WriteLine("Person not found");
             }
         }
-        public static void DeleteContact()
+        internal void DeleteContact(string addressBookName)
         {
             Console.WriteLine("Enter First Name");
             string fName = Console.ReadLine();
             Console.WriteLine("Enter Second Name");
+
             string sName = Console.ReadLine();
             bool personFound = false;
             Contacts personToDelete = new Contacts();
             foreach (Contacts item in listContacts)
             {
-                if (((item.firstName).ToLower() == fName.ToLower()) && ((item.secondName).ToLower() == sName.ToLower()))
+                if ((((item.firstName).ToLower() == fName.ToLower()) && ((item.secondName).ToLower() == sName.ToLower())) && item.addressBookName == addressBookName)
                 {
                     personToDelete = item;
                     personFound = true;
-                    Console.WriteLine("Person has been Removed from Contacts");
+                    Console.WriteLine("Person has been Removed from Contacts in " + addressBookName);
                 }
             }
             listContacts.Remove(personToDelete);
             if (personFound == false)
             {
                 Console.WriteLine("Person not found");
+            }
+        }
+        internal void AllContacts(string addressBookName)
+        {
+            foreach (Contacts item in listContacts)
+            {
+                if (item.addressBookName == addressBookName)
+                {
+                    Console.WriteLine(item.firstName + " " + item.secondName);
+                }
             }
         }
 
