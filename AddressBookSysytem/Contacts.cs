@@ -29,7 +29,10 @@ namespace AddressBook
             this.email = email;
         }
 
-
+        public override string ToString()
+        {
+            return $"firstname:{firstName} lastname:{lastName} address:{address} city:{city} state:{state} zipcode:{zipcode} phone:{phoneNumber} email:{email}";
+        }
 
 
     }
