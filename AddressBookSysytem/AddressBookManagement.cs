@@ -186,6 +186,7 @@ namespace AddressBook
                 Console.WriteLine("No record found");
         }
 
+
         public void ViewPerson()
         {
             Console.WriteLine("enter the city or state name");
@@ -208,6 +209,65 @@ namespace AddressBook
                 }
             }
         }
+
+        public void CountByCityOrState()
+        {
+            int count = 0;
+            Console.WriteLine("enter the city or state name");
+            string city = Console.ReadLine();
+            foreach (KeyValuePair<string, List<Contacts>> user in addressBookDictionary)
+            {
+                count += user.Value.Count(x => x.city == city || x.state == city);
+            }
+            Console.WriteLine("No of persons in city " + city + " is " + count);
+        }
+
+        public void SortPersonName()
+        {
+            foreach (KeyValuePair<string, List<Contacts>> user in addressBookDictionary)
+            {
+                user.Value.Sort((emp1, emp2) => emp1.firstName.CompareTo(emp2.firstName));
+            }
+            ViewPerson();
+        }
+
+        public void SortPersonByChoice()
+        {
+            Console.WriteLine("Choose option(1-4)\n1: Sort by Name\n2: Sort by City\n3: Sort by State\n4: Sort by Zipcode\n");
+            int choice = Convert.ToInt32(Console.ReadLine());
+            switch (choice)
+            {
+                case 1:
+                    foreach (KeyValuePair<string, List<Contacts>> user in addressBookDictionary)
+                    {
+                        user.Value.Sort((emp1, emp2) => emp1.firstName.CompareTo(emp2.firstName));
+                    }
+                    break;
+                case 2:
+                    foreach (KeyValuePair<string, List<Contacts>> user in addressBookDictionary)
+                    {
+                        user.Value.Sort((emp1, emp2) => emp1.city.CompareTo(emp2.city));
+                    }
+                    break;
+                case 3:
+                    foreach (KeyValuePair<string, List<Contacts>> user in addressBookDictionary)
+                    {
+                        user.Value.Sort((emp1, emp2) => emp1.state.CompareTo(emp2.state));
+                    }
+                    break;
+                case 4:
+                    foreach (KeyValuePair<string, List<Contacts>> user in addressBookDictionary)
+                    {
+                        user.Value.Sort((emp1, emp2) => emp1.zipcode.CompareTo(emp2.zipcode));
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Choose between 1-4");
+                    break;
+            }
+            ViewPerson();
+        }
+
 
     }
 }
