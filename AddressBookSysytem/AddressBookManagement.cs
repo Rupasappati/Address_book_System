@@ -10,11 +10,13 @@ namespace AddressBook
     {
         //Defining the list
         List<Contacts> contactList;
+        Dictionary<string, List<Contacts>> addressBookDictionary;
 
         //Defining constructor
         public AddressBookManagement()
         {
             contactList = new List<Contacts>();
+            addressBookDictionary = new Dictionary<string, List<Contacts>>();
         }
 
         public void AddContactDetail(string firstName, string lastName, string address, string city, string state, int zipcode, long phoneNumber, string email)
@@ -140,14 +142,14 @@ namespace AddressBook
         public void AddNewAddressBook()
         {
             //Creating new dictionary
-            Dictionary<string, AddressBookManagement> addressBookDict = new Dictionary<string, AddressBookManagement>();
+            Dictionary<string, AddressBookManagement> addressBookDictionary = new Dictionary<string, AddressBookManagement>();
             Console.WriteLine("Number of books to be added :  ");
             int numberOfBooks = Convert.ToInt32(Console.ReadLine());
             while (numberOfBooks > 0)
             {
                 Console.WriteLine("Enter the name of Address Book :");
                 string addBookName = Console.ReadLine();
-                if (addressBookDict.ContainsKey(addBookName))
+                if (addressBookDictionary.ContainsKey(addBookName))
                 {
                     Console.WriteLine("Address Book Already Exists");
                 }
@@ -155,15 +157,34 @@ namespace AddressBook
                 {
                     AddressBookManagement books = new AddressBookManagement();
                     books.AddNewContact();
-                    addressBookDict.Add(addBookName, books);
                 }
-                foreach (KeyValuePair<string, AddressBookManagement> item in addressBookDict)
+                foreach (KeyValuePair<string, AddressBookManagement> item in addressBookDictionary)
                 {
                     Console.WriteLine($"key:{item.Key} value:{item.Value}");
                 }
                 numberOfBooks--;
             }
         }
-    }
 
+        public void SearchPerson()
+        {
+            Console.WriteLine("enter the city or state name");
+            string city = Console.ReadLine();
+            int found = 0;
+            foreach (KeyValuePair<string, List<Contacts>> user in addressBookDictionary)
+            {
+                foreach (Contacts contact in user.Value)
+                {
+                    if (contact.city == city || contact.state == city)
+                    {
+                        Console.WriteLine(contact.firstName);
+                        found = 1;
+                    }
+                }
+            }
+            if (found == 0)
+                Console.WriteLine("No record found");
+        }
+
+    }
 }
