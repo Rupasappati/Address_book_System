@@ -12,8 +12,8 @@ namespace AddressBookProgram
     {
         List<Contact> contactList;
         Dictionary<string, List<Contact>> addressBookDict;
-        //public static string connectionstring = @"Data Source=DESKTOP-HCI3FAO\SQLEXPRESS;Initial Catalog=AddressBookServiceDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        //SqlConnection connection = null;
+        public static string connectionstring = @"Data Source=DESKTOP-HCI3FAO\SQLEXPRESS;Initial Catalog=AddressBookServiceDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        SqlConnection connection = null;
         public AddressBook()
         {
             contactList = new List<Contact>();
@@ -314,6 +314,43 @@ namespace AddressBookProgram
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        //UC 17 - Method To Update Contact details on DB
+        public Contact UpdateContactInDB(Contact obj)
+        {
+            try
+            {
+                connection = new SqlConnection(connectionstring);
+                SqlCommand command = new SqlCommand("spUpdateContacts", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("@FirstName", obj.firstName);
+                command.Parameters.AddWithValue("@City", obj.city);
+                command.Parameters.AddWithValue("@Zip", obj.zipcode);
+
+                connection.Open();
+                var result = command.ExecuteNonQuery();
+                if (result != 0)
+                {
+                    Console.WriteLine("Contact details updated successfully");
+                    return obj;
+                }
+                else
+                {
+                    Console.WriteLine("Failed to update Contact details");
+                    return default;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return default;
             }
             finally
             {

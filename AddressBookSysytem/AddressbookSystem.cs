@@ -84,6 +84,20 @@ namespace AddressBookProgram
                         jsonfile.ReadJsonFile();
                         break;
                     case 13:
+                        string query = "select * from AddressBook";
+                        addressBook.GetEntriesFromDB(query);
+                        break;
+                    case 14:
+                        Contact contact = new Contact();
+                        Console.WriteLine("Enter first name of contact");
+                        contact.firstName = Console.ReadLine();
+                        Console.WriteLine("Enter new City");
+                        contact.city = Console.ReadLine();
+                        Console.WriteLine("Enter new ZipCode");
+                        contact.zipcode = Convert.ToInt32(Console.ReadLine());
+                        addressBook.UpdateContactInDB(contact);
+                        break;
+                    case 0:
                         Environment.Exit(0);
                         break;
                     default:
