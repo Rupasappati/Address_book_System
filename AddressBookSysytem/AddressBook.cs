@@ -12,8 +12,10 @@ namespace AddressBookProgram
     {
         List<Contact> contactList;
         Dictionary<string, List<Contact>> addressBookDict;
-        public static string connectionstring = @"Data Source=DESKTOP-HCI3FAO\SQLEXPRESS;Initial Catalog=AddressBookServiceDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        public static string connectionString = @"Data Source=.; database=Payroll_Service; Integrated Security=True";
         SqlConnection connection = null;
+        private string connectionstring;
+
         public AddressBook()
         {
             contactList = new List<Contact>();
@@ -307,7 +309,8 @@ namespace AddressBookProgram
                     adapter.Fill(dataSet);
                     foreach (DataRow dataRow in dataSet.Tables[0].Rows)
                     {
-                        Console.WriteLine(dataRow["FirstName"] + ", " + dataRow["LastName"] + ", " + dataRow["Address"] + ", " + dataRow["City"] + ", " + dataRow["State"] + ", " + dataRow["Zip"] + ", " + dataRow["PhoneNumber"] + ", " + dataRow["Email"]);
+                        Console.WriteLine(dataRow["FirstName"] + ", " + dataRow["LastName"] + ", " + dataRow["Address"] + ", " +
+                            dataRow["City"] + ", " + dataRow["State"] + ", " + dataRow["Zip"] + ", " + dataRow["PhoneNumber"] + ", " + dataRow["Email"]);
                     }
                 }
             }

@@ -97,6 +97,10 @@ namespace AddressBookProgram
                         contact.zipcode = Convert.ToInt32(Console.ReadLine());
                         addressBook.UpdateContactInDB(contact);
                         break;
+                    case 15:
+                        string query1 = "select * from AddressBook where Date_Added between cast('2020-02-03' as date) and getdate()";
+                        addressBook.GetEntriesFromDB(query1);
+                        break;
                     case 0:
                         Environment.Exit(0);
                         break;
