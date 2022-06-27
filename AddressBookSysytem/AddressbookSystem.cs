@@ -16,11 +16,12 @@ namespace AddressBookProgram
 
                 AddressBook addressBook = new AddressBook();
 
-                Console.WriteLine("Please choose an option:");
+                Console.WriteLine("Please choose an option or choose 0 for Exit\n:");
                 Console.WriteLine("1: View Contact \n2: Add New Contact(s) \n3: Edit Contact \n4: Delete Contact " +
                     "\n5: Add Multiple Addressbook\n6: Find person in city/state\n7: View person in city/state\n8: Count by city/state\n" +
                     "9: Sort Contact List\n10: Add new book and save into file\n11: Add new book and save into csv file\n" +
-                    "12: Add new book and save into json file\n13: Exit\n");
+                    "12: Add new book and save into json file\n13: Retrieve from Database\n14: Update contact in DB\n15: Get entries Added " +
+                    "in particular DateRange\n16: Retrieve number of Contacts in the Database by City or State");
                 int option = Convert.ToInt32(Console.ReadLine());
                 switch (option)
                 {
@@ -100,6 +101,15 @@ namespace AddressBookProgram
                     case 15:
                         string query1 = "select * from AddressBook where Date_Added between cast('2020-02-03' as date) and getdate()";
                         addressBook.GetEntriesFromDB(query1);
+                        break;
+                    case 16:
+                        string queryState = "select COUNT(*) as StateCount, State from AddressBook group by State";
+                        string queryCity
+                            = "select COUNT(*) as CityCount, City from AddressBook group by City; ";
+                        Console.WriteLine("Displaying contacts by City");
+                        addressBook.GetCityCountDB(queryCity);
+                        Console.WriteLine("Displaying contacts by State");
+                        addressBook.GetStateCountDB(queryState);
                         break;
                     case 0:
                         Environment.Exit(0);
